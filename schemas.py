@@ -1,19 +1,19 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 
 class ObrigacaoAcessoriaBase(BaseModel):
     nome: str
     periodicidade: str
 
 class ObrigacaoAcessoriaCreate(ObrigacaoAcessoriaBase):
-    pass
+    empresa_id: int
 
 class ObrigacaoAcessoria(ObrigacaoAcessoriaBase):
     id: int
     empresa_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class EmpresaBase(BaseModel):
     nome: str
@@ -30,4 +30,4 @@ class Empresa(EmpresaBase):
     obrigacoes: List[ObrigacaoAcessoria] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -31,6 +31,9 @@ def read_empresas(skip: int = 0, limit: int = 10, db: Session = Depends(get_db))
 
 @app.post("/obrigacoes/", response_model=schemas.ObrigacaoAcessoria)
 def create_obrigacao(obrigacao: schemas.ObrigacaoAcessoriaCreate, db: Session = Depends(get_db)):
+    db_empresa = db.query(models.Empresa).filter(models.Empresa.id == obrigacao.empresa_id).first()
+    if not db_empresa:
+        raise HTTPException(status_code=404, detail="Empresa not found")
     db_obrigacao = models.ObrigacaoAcessoria(**obrigacao.dict())
     db.add(db_obrigacao)
     db.commit()
