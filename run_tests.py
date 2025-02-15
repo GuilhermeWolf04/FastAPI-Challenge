@@ -14,7 +14,6 @@ def get_test_db():
     finally:
         db.close()
 
-# Limpar o banco de dados antes dos testes
 def clear_db():
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
